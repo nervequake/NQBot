@@ -13,24 +13,6 @@ LEADER = ';'
 
 loop = asyncio.get_event_loop()
 
-def background_worker():
-    #loop = asyncio.get_event_loop()
-    time.sleep(10)
-    print("background worker started")
-    p = conn.pubsub()
-    p.subscribe('event:command')
-    while True:
-        print("in loop")
-        message = p.get_message()
-       
-        if message:
-            if type(message['data']) is int:
-                continue
-            c = client.get_channel(662707737217728533)
-            asyncio.run_coroutine_threadsafe(
-                c.send("You sent: {0}".format(message['data'].decode('utf-8'))), loop)
-        time.sleep(1)
-
 class SimpleInterface:
     def __init__(self, client):
         self.dc = client
